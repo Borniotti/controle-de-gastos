@@ -1,6 +1,6 @@
-import { useState, type FormEvent } from 'react';
-import { CATEGORIAS_DESPESA, CATEGORIAS_RECEITA, type Lancamento, type TipoLancamento } from '../tipos';
+import { type FormEvent, useState } from 'react';
 import { lerReais } from '../lib/dinheiro';
+import { CATEGORIAS_DESPESA, CATEGORIAS_RECEITA, type Lancamento, type TipoLancamento } from '../tipos';
 
 interface Props {
   dataPadrao: string;
@@ -39,6 +39,7 @@ export function FormLancamento({ dataPadrao, onAdicionar }: Props) {
       <h2>Novo lançamento</h2>
       <div className="alternador" role="radiogroup" aria-label="Tipo">
         {(['despesa', 'receita'] as const).map((t) => (
+          // biome-ignore lint/a11y/useSemanticElements: botões estilizados como alternador; role radio + aria-checked mantêm a semântica
           <button
             key={t}
             type="button"
@@ -53,7 +54,12 @@ export function FormLancamento({ dataPadrao, onAdicionar }: Props) {
       </div>
       <label>
         Descrição
-        <input value={descricao} onChange={(e) => setDescricao(e.target.value)} maxLength={60} placeholder="Supermercado" />
+        <input
+          value={descricao}
+          onChange={(e) => setDescricao(e.target.value)}
+          maxLength={60}
+          placeholder="Supermercado"
+        />
       </label>
       <div className="lado-a-lado">
         <label>

@@ -9,9 +9,7 @@ function escapar(campo: string): string {
 /** CSV com ponto e vírgula e vírgula decimal: abre direto no Excel em português. */
 export function paraCsv(lancamentos: Lancamento[]): string {
   const linhas = lancamentos.map((l) =>
-    [l.data, l.descricao, l.categoria, l.tipo, (l.valor / 100).toFixed(2).replace('.', ',')]
-      .map(escapar)
-      .join(';'),
+    [l.data, l.descricao, l.categoria, l.tipo, (l.valor / 100).toFixed(2).replace('.', ',')].map(escapar).join(';'),
   );
   return [COLUNAS.join(';'), ...linhas].join('\r\n');
 }

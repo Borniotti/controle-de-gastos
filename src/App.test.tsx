@@ -1,6 +1,6 @@
-import { describe, expect, it } from 'vitest';
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { describe, expect, it } from 'vitest';
 import App from './App';
 
 describe('App', () => {

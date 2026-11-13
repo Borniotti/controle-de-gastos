@@ -1,5 +1,5 @@
-import type { FatiaCategoria, MesHistorico } from '../lib/financas';
 import { formatarReais } from '../lib/dinheiro';
+import type { FatiaCategoria, MesHistorico } from '../lib/financas';
 
 export const CORES = ['#2563eb', '#16a34a', '#d97706', '#dc2626', '#7c3aed', '#0891b2', '#db2777', '#64748b'];
 
