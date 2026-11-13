@@ -3,7 +3,14 @@ import type { Lancamento } from '../tipos';
 import { deCsv, paraCsv } from './csv';
 
 const originais: Lancamento[] = [
-  { id: '1', data: '2026-10-01', descricao: 'Mercado; feira', categoria: 'Alimentação', tipo: 'despesa', valor: 123456 },
+  {
+    id: '1',
+    data: '2026-10-01',
+    descricao: 'Mercado; feira',
+    categoria: 'Alimentação',
+    tipo: 'despesa',
+    valor: 123456,
+  },
   { id: '2', data: '2026-10-05', descricao: 'Bônus "anual"', categoria: 'Salário', tipo: 'receita', valor: 50 },
 ];
 

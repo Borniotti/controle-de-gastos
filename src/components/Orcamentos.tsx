@@ -1,7 +1,7 @@
-import { useState, type FormEvent } from 'react';
-import { CATEGORIAS_DESPESA, type Orcamentos as TipoOrcamentos } from '../tipos';
-import type { SituacaoOrcamento } from '../lib/financas';
+import { type FormEvent, useState } from 'react';
 import { formatarReais, lerReais } from '../lib/dinheiro';
+import type { SituacaoOrcamento } from '../lib/financas';
+import { CATEGORIAS_DESPESA, type Orcamentos as TipoOrcamentos } from '../tipos';
 
 interface Props {
   situacao: SituacaoOrcamento[];

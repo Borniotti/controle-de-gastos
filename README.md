@@ -19,14 +19,14 @@ Clique em **Ver exemplo** para carregar seis meses de dados fictícios.
 
 ## Decisões técnicas
 
-| Decisão | Por quê |
-|---|---|
-| Valores guardados em **centavos inteiros** | Evita o erro clássico de `0,1 + 0,2 = 0,30000000000000004` em dinheiro. |
-| Regras de negócio em [`src/lib/`](src/lib), separadas dos componentes | A lógica é testada sem precisar de navegador, e os componentes ficam simples. |
-| Leitor de valores que aceita `1.234,56`, `R$ 12` e `12.50` | É assim que as pessoas digitam no Brasil. Valores ambíguos como `12,345` são recusados com mensagem clara. |
-| Leitor de CSV próprio, que respeita aspas | Descrições com `;` ou aspas não quebram a importação. Linhas ruins são apontadas pelo número, e as boas são importadas. |
-| Hook `useArmazenamento` | Igual ao `useState`, mas salva no `localStorage`, e continua funcionando em aba anônima. |
-| TypeScript em modo estrito (`strict` + `noUncheckedIndexedAccess`) | Pega erros antes de rodar. |
+| Decisão                                                               | Por quê                                                                                                                 |
+| --------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| Valores guardados em **centavos inteiros**                            | Evita o erro clássico de `0,1 + 0,2 = 0,30000000000000004` em dinheiro.                                                 |
+| Regras de negócio em [`src/lib/`](src/lib), separadas dos componentes | A lógica é testada sem precisar de navegador, e os componentes ficam simples.                                           |
+| Leitor de valores que aceita `1.234,56`, `R$ 12` e `12.50`            | É assim que as pessoas digitam no Brasil. Valores ambíguos como `12,345` são recusados com mensagem clara.              |
+| Leitor de CSV próprio, que respeita aspas                             | Descrições com `;` ou aspas não quebram a importação. Linhas ruins são apontadas pelo número, e as boas são importadas. |
+| Hook `useArmazenamento`                                               | Igual ao `useState`, mas salva no `localStorage`, e continua funcionando em aba anônima.                                |
+| TypeScript em modo estrito (`strict` + `noUncheckedIndexedAccess`)    | Pega erros antes de rodar.                                                                                              |
 
 ## Testes
 

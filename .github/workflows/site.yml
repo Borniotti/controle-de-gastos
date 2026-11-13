@@ -1,4 +1,4 @@
-name: Testes e site
+﻿name: Testes e site
 
 on:
   push:
@@ -20,6 +20,7 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      - run: npx biome ci .
       - run: npm run lint
       - run: npm test
       - run: npm run build

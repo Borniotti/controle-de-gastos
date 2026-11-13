@@ -1,6 +1,11 @@
-import { useMemo, useRef, useState, type ChangeEvent } from 'react';
-import type { Lancamento, Orcamentos as TipoOrcamentos } from './tipos';
+import { type ChangeEvent, useMemo, useRef, useState } from 'react';
+import { FormLancamento } from './components/FormLancamento';
+import { GraficoCategorias, GraficoMensal } from './components/Graficos';
+import { Orcamentos } from './components/Orcamentos';
 import { useArmazenamento } from './hooks/useArmazenamento';
+import { deCsv, paraCsv } from './lib/csv';
+import { formatarReais } from './lib/dinheiro';
+import { gerarExemplo, ORCAMENTOS_EXEMPLO } from './lib/exemplo';
 import {
   deslocarMes,
   despesasPorCategoria,
@@ -11,12 +16,7 @@ import {
   resumir,
   situacaoOrcamentos,
 } from './lib/financas';
-import { formatarReais } from './lib/dinheiro';
-import { deCsv, paraCsv } from './lib/csv';
-import { gerarExemplo, ORCAMENTOS_EXEMPLO } from './lib/exemplo';
-import { FormLancamento } from './components/FormLancamento';
-import { GraficoCategorias, GraficoMensal } from './components/Graficos';
-import { Orcamentos } from './components/Orcamentos';
+import type { Lancamento, Orcamentos as TipoOrcamentos } from './tipos';
 
 function hoje() {
   const d = new Date();
@@ -61,7 +61,7 @@ export default function App() {
   }
 
   function exportar() {
-    const blob = new Blob(['﻿' + paraCsv(filtrar(lancamentos, {}))], { type: 'text/csv;charset=utf-8' });
+    const blob = new Blob([`﻿${paraCsv(filtrar(lancamentos, {}))}`], { type: 'text/csv;charset=utf-8' });
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
     link.download = `lancamentos-${hoje()}.csv`;
@@ -148,14 +148,28 @@ export default function App() {
           <GraficoMensal meses={historicoMensal(lancamentos, mes)} />
         </section>
 
-        <Orcamentos situacao={situacaoOrcamentos(doMes, orcamentos)} orcamentos={orcamentos} onDefinir={definirOrcamento} />
+        <Orcamentos
+          situacao={situacaoOrcamentos(doMes, orcamentos)}
+          orcamentos={orcamentos}
+          onDefinir={definirOrcamento}
+        />
 
         <section className="cartao largo" aria-labelledby="titulo-lancamentos">
           <div className="lista-topo">
             <h2 id="titulo-lancamentos">Lançamentos</h2>
             <div className="filtros">
-              <input type="search" value={busca} onChange={(e) => setBusca(e.target.value)} placeholder="Buscar" aria-label="Buscar lançamento" />
-              <select value={categoria} onChange={(e) => setCategoria(e.target.value)} aria-label="Filtrar por categoria">
+              <input
+                type="search"
+                value={busca}
+                onChange={(e) => setBusca(e.target.value)}
+                placeholder="Buscar"
+                aria-label="Buscar lançamento"
+              />
+              <select
+                value={categoria}
+                onChange={(e) => setCategoria(e.target.value)}
+                aria-label="Filtrar por categoria"
+              >
                 <option value="">Todas as categorias</option>
                 {categoriasUsadas.map((c) => (
                   <option key={c}>{c}</option>
@@ -165,13 +179,17 @@ export default function App() {
           </div>
           {visiveis.length === 0 ? (
             <p className="vazio">
-              {doMes.length === 0 ? 'Nenhum lançamento neste mês. Adicione um ou clique em "Ver exemplo".' : 'Nada encontrado com esse filtro.'}
+              {doMes.length === 0
+                ? 'Nenhum lançamento neste mês. Adicione um ou clique em "Ver exemplo".'
+                : 'Nada encontrado com esse filtro.'}
             </p>
           ) : (
             <ul className="lancamentos" aria-label="Lista de lançamentos">
               {visiveis.map((l) => (
                 <li key={l.id}>
-                  <time dateTime={l.data}>{l.data.slice(8, 10)}/{l.data.slice(5, 7)}</time>
+                  <time dateTime={l.data}>
+                    {l.data.slice(8, 10)}/{l.data.slice(5, 7)}
+                  </time>
                   <div className="lancamento-info">
                     <strong>{l.descricao}</strong>
                     <small>{l.categoria}</small>
@@ -179,7 +197,12 @@ export default function App() {
                   <span className={`numero ${l.tipo === 'receita' ? 'positivo' : 'negativo'}`}>
                     {l.tipo === 'receita' ? '+' : '−'} {formatarReais(l.valor)}
                   </span>
-                  <button type="button" className="botao-texto" onClick={() => remover(l.id)} aria-label={`Remover ${l.descricao}`}>
+                  <button
+                    type="button"
+                    className="botao-texto"
+                    onClick={() => remover(l.id)}
+                    aria-label={`Remover ${l.descricao}`}
+                  >
                     ✕
                   </button>
                 </li>

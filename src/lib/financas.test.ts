@@ -11,7 +11,13 @@ import {
 } from './financas';
 
 let contador = 0;
-function lanc(data: string, valor: number, tipo: Lancamento['tipo'], categoria = 'Outros', descricao = 'Item'): Lancamento {
+function lanc(
+  data: string,
+  valor: number,
+  tipo: Lancamento['tipo'],
+  categoria = 'Outros',
+  descricao = 'Item',
+): Lancamento {
   return { id: String(++contador).padStart(4, '0'), data, valor, tipo, categoria, descricao };
 }
 
@@ -43,7 +49,10 @@ describe('resumir', () => {
 
 describe('filtrar', () => {
   it('filtra por mês, categoria e busca sem acento, do mais recente para o mais antigo', () => {
-    expect(filtrar(dados, { mes: '2026-10', categoria: 'Alimentação' }).map((l) => l.descricao)).toEqual(['Mercado', 'Açougue']);
+    expect(filtrar(dados, { mes: '2026-10', categoria: 'Alimentação' }).map((l) => l.descricao)).toEqual([
+      'Mercado',
+      'Açougue',
+    ]);
     expect(filtrar(dados, { busca: 'acougue' }).map((l) => l.descricao)).toEqual(['Açougue']);
   });
 });
